@@ -43,9 +43,12 @@ deb-src http://security.debian.org/ jessie/updates main contrib non-free
 deb http://http.us.debian.org/debian jessie main contrib non-free
 deb http://packages.dotdeb.org jessie all
 deb-src http://packages.dotdeb.org jessie all
+deb https://download.webmin.com/download/repository sarge contrib
 END2
 wget "http://www.dotdeb.org/dotdeb.gpg"
 cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
+wget "http://www.webmin.com/jcameron-key.asc"
+cat jcameron-key.asc | apt-key add -;rm jcameron-key.asc
 
 # remove unused
 apt-get -y --purge remove samba*;
@@ -130,7 +133,7 @@ http {
 }
 END3
 mkdir -p /home/vps/public_html
-wget -O /home/vps/public_html/index.html "http://script.hostingtermurah.net/repo/index.html"
+wget -O /home/vps/public_html/index.html "http://home.trueid.net"
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
 args='$args'
 uri='$uri'
@@ -225,11 +228,11 @@ service squid3 restart
 
 # install webmin
 cd
-wget "http://script.hostingtermurah.net/repo/webmin_1.801_all.deb"
-dpkg --install webmin_1.801_all.deb;
+wget "http://prdownloads.sourceforge.net/webadmin/webmin_1.880_all.deb"
+dpkg --install webmin_1.880_all.deb;
 apt-get -y -f install;
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-rm /root/webmin_1.801_all.deb
+rm /root/webmin_1.880_all.deb
 service webmin restart
 service vnstat restart
 
